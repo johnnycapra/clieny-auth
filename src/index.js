@@ -1,17 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import App from './components/App';
+import reducers from './reducers';
+import Welcome from './components/Welcome';
+import Signup from './components/auth/Signup';
+import { Provider } from 'react-redux';
+import reduxThunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+
+
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    <Provider store={configureStore({reducer: reducers, middlewares:[reduxThunk] })}>
+        <BrowserRouter>
+            <App>
+                <Routes>
+                    <Route path="/" element={<Welcome/>} />
+                    <Route path="/signup" element={<Signup />} />
+                </Routes>
+            </App>
+        </BrowserRouter>
+    </Provider>
+)
