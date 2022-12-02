@@ -4,18 +4,13 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import withNavigation from '../withNavigation';
 
-class Signup extends Component {
+class Signin extends Component {
 
     onSubmit = async (formProps) => {
         const { navigation } = this.props;
-         await this.props.signup(formProps);
-         console.log(this.props)
-            if (this.props.errorMessage) {
-                navigation('/signup')
-            } else {
+            await this.props.signin(formProps);
                 navigation("/feature");
-            }
-  
+     
     }
 
     render() {
@@ -43,7 +38,7 @@ class Signup extends Component {
                     />
                 </fieldset>
                 <div>{this.props.errorMessage}</div>
-                <button>Sign up!</button>
+                <button>Sign in!</button>
             </form>
         )
     }
@@ -53,4 +48,4 @@ function mapStateToProps(state) {
     return { errorMessage: state.auth.errorMessage }
 }
 
-export default connect(mapStateToProps, actions)(reduxForm({ form: 'signup'})(withNavigation(Signup)));
+export default connect(mapStateToProps, actions)(reduxForm({ form: 'signin'})(withNavigation(Signin)));
